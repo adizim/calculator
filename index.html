@@ -1,0 +1,50 @@
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="math.min.js" type="text/javascript"></script>
+    <script>
+    	function to_expr(str) {
+    		if (window.localStorage.getItem('answer')) {
+    			document.querySelector('#output').innerHTML = str
+    			window.localStorage.removeItem('answer')
+    		} else {
+    			if (str == '+') {
+    				if (window.localStorage.getItem('op')) {
+    					return;
+    				}
+    				window.localStorage.setItem('op', str)
+
+    				document.querySelector('#output').innerHTML = document.querySelector('#output').innerHTML + ' ' +str + ' '	
+    			} else {
+    				document.querySelector('#output').innerHTML = document.querySelector('#output').innerHTML + str
+
+    				window.localStorage.removeItem('op')
+    			}
+    		}
+    	}
+    	function eq() {
+    		try {
+    			ans = math.eval(document.querySelector('#output').innerHTML)
+    		} catch(err) {
+    			console.error(err);
+    			return;
+    		}
+    		window.localStorage.setItem('answer', ans);
+    		document.querySelector('#output').innerHTML = ans
+    	}
+    </script>
+    
+</head>
+<body>
+	<p id="output"></p>
+	<div id="pad">
+		<button id="1" type="button" onclick="to_expr('1')">1</button>
+		<button id="2" type="button" onclick="to_expr('2')">2</button>
+		<button id="3" type="button" onclick="to_expr('3')">3</button>
+		<button id="4" type="button" onclick="to_expr('4')">4</button>
+		<button id="+" type="button" onclick="to_expr('+')">+</button>
+		<button id="=" type="button" onclick="eq()">=</button>
+	</div>
+</body>
+</html>
